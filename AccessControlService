@@ -1,0 +1,39 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package racb;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+public class AccessControlService {
+    private Map<Role, Set<Permission>> rolePermissions;
+    private Map<User, Set<Role>> userRoles;
+    public AccessControlService(){
+        this.userRoles = new HashMap<>();
+        this.rolePermissions = new HashMap<>();
+    }
+    public void assignRoleToUser(User user, Role role){
+        this.userRoles.putIfAbsent(user, new HashSet<>());
+        this.userRoles.get(user).add(role);
+    }
+    public void grantPermissionToRole(Role role, Permission permission){
+        this.rolePermissions.putIfAbsent(role, new HashSet<>());
+        this.rolePermissions.get(role).add(permission);
+    }
+    public boolean checkAccess(User user, Permission permissionToCheck){
+        Set<Role> rolesOfUser = this.userRoles.get(user);
+        if(rolesOfUser == null || rolesOfUser.isEmpty()){
+            return false;
+        }
+        Set<Permission> allPermissions = new HashSet<>();
+        for(Role role : rolesOfUser){
+            Set<Permission> permissionsOfRole = this.rolePermissions.get(role);
+            if(permissionsOfRole != null){
+                allPermissions.addAll(permissionsOfRole);           
+            }
+        }
+        return allPermissions.contains(permissionToCheck);
+    }
+}

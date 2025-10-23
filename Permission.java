@@ -1,32 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
+ */
 package racb;
-import java.util.Set;
-import java.util.HashSet;
-public class Role {
-    private String roleName;
-    private Set<Role> inheritedRoles;
-    
-    public Role(String name){
-        this.roleName = name;
-        this.inheritedRoles = new HashSet<>();
-    }
-    public void addInheritedRoles(Role parentRole){
-        this.inheritedRoles.add(parentRole);
-    }
-    public Set<Role> getInheritedRoles(){
-        return this.inheritedRoles;
-    }
-    public String getName() {
-        return roleName;
-    }
+
+/**
+ *
+ * @author Administrator
+ */
+public class Permission {
+        private String permissionName;
+        
+        public Permission(String name){
+            this.permissionName = name;
+        }
+        public String getName(){
+            return permissionName;
+        }
     @Override
     public boolean equals(Object obj){
-        if(this == obj) return true;
-        if(obj == null || getClass() != obj.getClass()) return false;
-        Role role = (Role) obj;
-        return roleName.equals(role.roleName);
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Permission that = (Permission) obj;
+        return permissionName.equals(that.permissionName);
     }
     @Override
     public int hashCode(){
-        return roleName.hashCode();
+        return permissionName.hashCode();
     }
 }
